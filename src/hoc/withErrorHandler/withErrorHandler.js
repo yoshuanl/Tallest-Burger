@@ -11,14 +11,22 @@ const withErrorHandler = (WrappedComponent, axios) => {
         // componentDidMount run after all child components are rendered
         // TODO: use constructor to replace componentWillMount
         componentWillMount () {
-            axios.interceptors.request.use(req => {
+            this.reqInterceptor = axios.interceptors.request.use(req => {
                 this.setState({error: null})
                 return req; // so the request can continue
             })
             // error is an object that contains error message
-            axios.interceptors.response.use(response => response, error => {
+            this.resInterceptor = axios.interceptors.response.use(response => response, error => {
                 this.setState({error: error})
             })
+        }
+
+        // execute after a component isn't required anymore
+        // remove unused interceptors 
+        // to prevent memory leak when this error handler is used to wrap more and more components
+        componentWillUnmount () {
+            axios.interceptors.request.eject(this.reqInterceptor);
+            axios.interceptors.response.eject(this.resInterceptor);
         }
 
         errorConfirmedHandler = () => {
