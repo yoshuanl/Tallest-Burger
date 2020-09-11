@@ -4,9 +4,11 @@ import classes from './Burger.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient'
 
 const burger = (props) => {
+    // console.log('in Burger props=', props)
     let transformedIngredients = Object.keys(props.ingredients).map(igKey => {
+            // console.log('props.ingredients[igKey]', props.ingredients[igKey])
             return [...Array(props.ingredients[igKey])].map((_, index) => {
-                return <BurgerIngredient key={igKey + index} type={igKey}></BurgerIngredient>
+                return <BurgerIngredient key={igKey + index} type={igKey}/>
             });
         }
     ).reduce((arr, el) => {

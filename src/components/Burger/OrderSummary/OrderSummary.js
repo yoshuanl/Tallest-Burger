@@ -3,10 +3,9 @@ import React, { Component, Fragment } from 'react';
 import Button from '../../UI/Button/Button';
     
 class OrderSummary extends Component {
-    componentDidUpdate () {
-        console.log("component will update")
-    }
+    // TODO: add a shouldComponentUpdate
     render () {
+        console.log('in OrderSummary props=', this.props)
         const ingredientSummary = Object.keys(this.props.ingredients).map((ingKey) => {
             return (
                 <li key={ingKey}>

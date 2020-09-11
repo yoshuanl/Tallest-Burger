@@ -23,10 +23,10 @@ class BurgerBuilder extends Component {
     state = {
         ingredients: null,
         totalPrice: 4,
-        purchasable: false,
-        purchasing: false,
-        loading: false,
-        error: false
+        purchasable: false, // for checking if user adds any ingredient
+        purchasing: false, // for showing the modal
+        loading: false, // for showing the spinner
+        error: false // for showing the error message
     };
 
     componentDidMount () {
@@ -84,37 +84,11 @@ class BurgerBuilder extends Component {
     }
 
     continuePurchaseHandler = () => {
-        // this.setState({loading: true})
-        // const order = {
-        //     ingredients: this.state.ingredients,
-        //     price: this.state.totalPrice,
-        //     customer: {
-        //         name: 'Scully',
-        //         address: {
-        //             street: 'test',
-        //             zipCode: '12345',
-        //             country: 'Taiwan'
-        //         },
-        //         email: 'test@usc.edu'
-        //     },
-        //     deliveryMethod: 'fastest'
-        // }
-        // // .json is important for Firebase
-        // axios.post('/orders.json', order)
-        //     .then(response => {
-        //         this.setState({
-        //             loading: false,
-        //             purchasing: false})
-        //     })
-        //     .catch(error => {
-        //         this.setState({
-        //             loading: false,
-        //             purchasing: false})
-        //     });
         const queryParams = [];
         for (let i in this.state.ingredients) {
             queryParams.push(encodeURIComponent(i)+'='+encodeURIComponent(this.state.ingredients[i]))
         }
+        queryParams.push('price='+this.state.totalPrice);
         const queryString = queryParams.join('&');
         this.props.history.push({ // one of the special props provided by the Router
             pathname: '/checkout',
