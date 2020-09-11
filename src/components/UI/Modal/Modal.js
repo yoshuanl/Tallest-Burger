@@ -5,7 +5,8 @@ import Backdrop from '../Backdrop/Backdrop';
     
 class Modal extends Component {
     shouldComponentUpdate (nextProps, nextState) {
-        return nextProps.show !== this.props.show;
+        // check children too for spinner show/not show
+        return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
         // can't use code below, otherwise the modal won't hide
         // return !this.props.show & nextProps.show;
     }
