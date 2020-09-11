@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
+import ContactData from '../Checkout/ContactData/ContactData';
     
 class Checkout extends Component {
     state = {
@@ -13,6 +15,7 @@ class Checkout extends Component {
     }
 
     // whenever this component is loaded, this part will be mount
+    // but if any part of this component is updated, this part won't be execute again
     componentDidMount () {
         // this.props.location.search include ? and =
         const query = new URLSearchParams(this.props.location.search);
@@ -40,6 +43,7 @@ class Checkout extends Component {
                     ingredients={this.state.ingredients}
                     checkoutCanceled={this.checkoutCanceledHandler}
                     checkoutContinued={this.checkoutContinuedHandler}/>
+                <Route path={this.props.match.path + '/contact-data'} component={ContactData}/>
             </div>
         )
         
