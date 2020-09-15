@@ -65,18 +65,14 @@ class ContactData extends Component {
     orderHandler = (event) => {
         event.preventDefault(); // the default behavior of a <form/> is to send the request and reload the page
         this.setState({loading: true});
+        const formData = {};
+        for (let formEleIdentifier in this.state.orderForm) {
+            formData[formEleIdentifier] = this.state.orderForm[formEleIdentifier].value;
+        }
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
-            customer: {
-                name: 'Scully',
-                address: {
-                    street: 'test',
-                    zipCode: '12345',
-                    country: 'Taiwan'
-                },
-                email: 'test@usc.edu'
-            },
+            orderData: formData,
             deliveryMethod: 'fastest'
         }
         // .json is important for Firebase
@@ -111,7 +107,8 @@ class ContactData extends Component {
             });
         }
         let form = (
-            <form>
+            // use onSubmit instead of onClick in button
+            <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement => (
                     <Input
                         key={formElement.id}
@@ -120,7 +117,7 @@ class ContactData extends Component {
                         value={formElement.config.value}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}/> // formElement.id is the key, which is name, email, ...
                 ))}
-                <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
+                <Button btnType="Success">ORDER</Button>
             </form>
         );
         if (this.state.loading) {
