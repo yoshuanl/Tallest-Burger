@@ -13,14 +13,8 @@ import * as actionTypes from '../../store/actions';
 
 
 class BurgerBuilder extends Component {
-    // constructor (props) {
-    //     super(props);
-    //     this.state = {...}
-    // }
+    // leave only UI related state here
     state = {
-        //ingredients: null,
-        //totalPrice: 4,
-        purchasable: false, // for checking if user adds any ingredient
         purchasing: false, // for showing the modal
         loading: false, // for showing the spinner
         error: false // for showing the error message
@@ -40,8 +34,7 @@ class BurgerBuilder extends Component {
         }).reduce((subsum, cnt) => {
             return subsum + cnt
         }, 0);
-
-        this.setState({purchasable: sum > 0});
+        return sum > 0;
     }
 
     purchasingHandler = () => {
@@ -85,7 +78,7 @@ class BurgerBuilder extends Component {
                         removed={this.props.onIngredientRemoved}
                         disabledInfo={disabledInfo}
                         price={this.props.ttlPr}
-                        ordernow={this.state.purchasable}
+                        ordernow={this.updatePurchasableHandler(this.props.ing)}
                         ordered={this.purchasingHandler}/>
                 </Fragment>);
             orderSummary = (<OrderSummary 
