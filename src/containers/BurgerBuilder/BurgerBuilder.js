@@ -16,16 +16,14 @@ class BurgerBuilder extends Component {
     // leave only UI related state here
     state = {
         purchasing: false, // for showing the modal
-        loading: false, // for showing the spinner
-        error: false // for showing the error message
+        //loading: false, // for showing the spinner
+        //error: false // for showing the error message
     };
 
     componentDidMount () {
-        axios.get('/ingredients.json')
-            .then(response => {
-                this.setState({ingredients: response.data});
-            })
-            .catch(error => this.setState({error: true}) )
+        console.log('this.props', this.props)
+        this.props.onInitIngredients();
+        console.log('after init', this.props.ing);
     }
 
     updatePurchasableHandler = (ingredients) => {
@@ -67,9 +65,10 @@ class BurgerBuilder extends Component {
         }
         console.log('-----this.props.ing', this.props.ing)
         let orderSummary = null;
-        let burger = this.state.error ? <p>Couldn't load ingredients</p> : <Spinner/>;
+        console.log('error?', this.props.error)
+        let burger = this.props.error ? <p>Couldn't load ingredients</p> : <Spinner/>;
 
-        if (this.state.ingredients) {
+        if (this.props.ing) {
             burger = (
                 <Fragment>
                     <Burger ingredients={this.props.ing}/>
@@ -88,9 +87,9 @@ class BurgerBuilder extends Component {
                 totalPrice={this.props.ttlPr}/>);
         }
         
-        if (this.state.loading) {
-            orderSummary = <Spinner/>;
-        }
+        // if (this.state.loading) {
+        //     orderSummary = <Spinner/>;
+        // }
         
         return (
             <Fragment>
@@ -108,17 +107,20 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
     return {
         ing: state.ingredients,
-        ttlPr: state.totalPrice
+        ttlPr: state.totalPrice,
+        error: state.error
     }
 }
 // mapStateToProps holds a function which receive dispatch function as an arguement
 const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
-        onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName))
+        onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
+        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
     }
 }
 // we can have as many hoc as we wish
 // "connect" will set some props for the components it is wrapping
 // mapStateToProps, mapDispatchToProps down here is not interchangable
+// we can still handle the error with our hoc because we still use axios instance, no matter we send request from where
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios));
