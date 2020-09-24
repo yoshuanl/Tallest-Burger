@@ -106,9 +106,9 @@ class BurgerBuilder extends Component {
 // and return a object that defines which property should hold which slice of the state
 const mapStateToProps = state => {
     return {
-        ing: state.ingredients,
-        ttlPr: state.totalPrice,
-        error: state.error
+        ing: state.burgerBuilder.ingredients,
+        ttlPr: state.burgerBuilder.totalPrice,
+        error: state.burgerBuilder.error
     }
 }
 // mapStateToProps holds a function which receive dispatch function as an arguement
