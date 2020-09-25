@@ -19,13 +19,14 @@ const purchaseSuccess = (state, action) => {
     console.log("in purchaseSuccess", action);
     const newOrder = {
         ...action.orderData,
-        id: action.orderId
+        id: action.orderID
     };
     const updatedObject = {
         loading: false,
         purchased: true, // so the page can redirect to '/'
         orders: state.orders.concat(newOrder) // concat return a new array
     }
+    console.log('updatedObject', updatedObject)
     return updateObject(state, updatedObject);
 };
 
