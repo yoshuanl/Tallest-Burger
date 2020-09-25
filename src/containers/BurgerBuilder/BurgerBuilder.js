@@ -21,9 +21,7 @@ class BurgerBuilder extends Component {
     };
 
     componentDidMount () {
-        console.log('this.props', this.props)
         this.props.onInitIngredients();
-        console.log('after init', this.props.ing);
     }
 
     updatePurchasableHandler = (ingredients) => {
@@ -56,9 +54,7 @@ class BurgerBuilder extends Component {
         for (let key in disabledInfo) {
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
-        console.log('-----this.props.ing', this.props.ing)
         let orderSummary = null;
-        console.log('error?', this.props.error)
         let burger = this.props.error ? <p>Couldn't load ingredients</p> : <Spinner/>;
 
         if (this.props.ing) {
@@ -79,10 +75,6 @@ class BurgerBuilder extends Component {
                 purchasecontinued={this.continuePurchaseHandler}
                 totalPrice={this.props.ttlPr}/>);
         }
-        
-        // if (this.state.loading) {
-        //     orderSummary = <Spinner/>;
-        // }
         
         return (
             <Fragment>

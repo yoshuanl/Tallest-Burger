@@ -34,7 +34,6 @@ export const initIngredients = () => {
         axios.get('/ingredients.json')
             // then execute setIngredients, the sync code
             .then(response => {
-                console.log('response', response.data);
                 dispatch(setIngredients(response.data));
             })
             .catch(error =>  {

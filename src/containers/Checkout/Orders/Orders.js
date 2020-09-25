@@ -12,6 +12,7 @@ class Orders extends Component {
     }
 
     render () {
+        console.log("in Order", this.props.orders)
         return (
             <div>
                 {this.props.orders.map(order => (
