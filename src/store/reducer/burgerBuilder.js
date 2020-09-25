@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from '../utility'; 
 
 const initialState = {
     ingredients: null, // fetch from server
@@ -17,35 +18,26 @@ const INGREDIENT_PRICES = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
-            return {
-                ...state, // React state should be treated as immutable
-                ingredients: {
-                    ...state.ingredients, // create deep clone
-                    [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-                },
-                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
-            };
+            const updatedIngredient1 = {
+                ...state.ingredients, // create deep clone
+                [action.ingredientName]: state.ingredients[action.ingredientName] + 1};
+            const updatedObject1 = {ingredients: updatedIngredient1, totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]}
+            return updateObject(state, updatedObject1);
+
         case actionTypes.REMOVE_INGREDIENT:
-            return {
-                ...state,
-                ingredients: {
-                    ...state.ingredients,
-                    [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-                },
-                totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
-            };
+            const updatedIngredient2 = {
+                ...state.ingredients, // create deep clone
+                [action.ingredientName]: state.ingredients[action.ingredientName] - 1};
+            const updatedObject2 = {ingredients: updatedIngredient2, totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]}
+            return updateObject(state, updatedObject2);
+
         case actionTypes.SET_INGREDIENTS:
-            return {
-                ...state,
-                ingredients: action.ingredients,
-                totalPrice: 4,
-                error: false
-            }
+            const updatedObject3 = {ingredients: action.ingredients, totalPrice: 4, error: false}
+            return updateObject(state, updatedObject3);
+
         case actionTypes.FETCH_INGREDIENTS_FAILED:
-            return {
-                ...state,
-                error: true
-            }
+            return updateObject(state, {error: true});
+            
         default:
             return state;
 
