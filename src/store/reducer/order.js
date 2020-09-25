@@ -16,7 +16,6 @@ const purchaseStart = (state) => {
 };
 
 const purchaseSuccess = (state, action) => {
-    console.log("in purchaseSuccess", action);
     const newOrder = {
         ...action.orderData,
         id: action.orderID
@@ -26,7 +25,6 @@ const purchaseSuccess = (state, action) => {
         purchased: true, // so the page can redirect to '/'
         orders: state.orders.concat(newOrder) // concat return a new array
     }
-    console.log('updatedObject', updatedObject)
     return updateObject(state, updatedObject);
 };
 
@@ -48,7 +46,6 @@ const fetchFail = (state) => {
 
 
 const reducer = (state = initialState, action) => {
-    console.log("action in reducer", action);
     switch (action.type) {
         case actionTypes.PURCHASE_INIT: return purchaseInit(state);
         case actionTypes.PURCHASE_BURGER_START: return purchaseStart(state);
