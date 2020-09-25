@@ -9,6 +9,7 @@ import * as actions from '../../store/actions/index';
 class Auth extends Component {
     // manage local state (user input) inside container instead of redux
     state = {
+        isSignup: true,
         controls: {
             email: {
                 elementType: 'input', // normal html tags name
@@ -79,7 +80,14 @@ class Auth extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email, this.state.controls.password);
+        console.log('state', this.state.isSignup)
+        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignup);
+    }
+
+    switchAuthModeHandler = () => {
+        this.setState(prevState => {
+            return {isSignup: !prevState.isSignup};
+        })
     }
 
     render () {
@@ -107,6 +115,9 @@ class Auth extends Component {
                 {form}
                 <Button btnType="Success">Submit</Button>
                 </form>
+                <Button 
+                    clicked={this.switchAuthModeHandler}
+                    btnType="Danger">Switch to {this.state.isSignup ? "Sign In" : "Sign Up"}</Button>
             </div>
         )
     }
@@ -114,7 +125,7 @@ class Auth extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+        onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
     }
 }
     
