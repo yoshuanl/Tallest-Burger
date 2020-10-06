@@ -10,7 +10,7 @@ import * as actions from '../../store/actions/index';
 class Auth extends Component {
     // manage local state (user input) inside container instead of redux
     state = {
-        isSignup: true,
+        isSignup: false,
         controls: {
             email: {
                 elementType: 'input', // normal html tags name
@@ -131,7 +131,7 @@ class Auth extends Component {
                 </form>
                 <Button 
                     clicked={this.switchAuthModeHandler}
-                    btnType="Danger">Switch to {this.state.isSignup ? "Sign In" : "Sign Up"}</Button>
+                    btnType="Danger">Switch to {this.state.isSignup ? "Login" : "Sign Up"}</Button>
             </div>
         )
     }
